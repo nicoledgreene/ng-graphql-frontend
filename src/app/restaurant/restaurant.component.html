@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="choices">
+    <mat-button-toggle-group [(ngModel)]="queryChoice" aria-label="Query Choices">
+      <mat-button-toggle value="restaurants">restaurants</mat-button-toggle>
+      <mat-button-toggle value="restaurantByName">restaurantByName</mat-button-toggle>
+      <mat-button-toggle value="createRestaurant">createRestaurant</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class="query-container">
+    <ng-container *ngIf="!queryChoice">
+      Choose a query option
+    </ng-container>
+    <ng-container *ngIf="queryChoice === 'restaurants'">
+      <button mat-raised-button (click)="getRestaurants()">Get all restaurants</button>
+      <ul *ngIf="(restaurants$ | async)?.length !== 0">
+        <li *ngFor="let restaurant of restaurants$ | async">
+          <span [style.font-weight]="900">{{ restaurant.name }}.</span>
+          <span>{{ restaurant.address.city }},</span>
+          <span>{{ restaurant.address.state }}</span>
+        </li>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="queryChoice === 'restaurantByName'">
+      <form class="restaurant-name-form">
+        <mat-form-field appearance="fill">
+          <mat-input>
+            <mat-label>Restaurant name</mat-label>
+            <input matInput placeholder="Ex. Bagel Place" value="">
+          </mat-input>
+        </mat-form-field>
+      </form>
+    </ng-container>
+    <ng-container *ngIf="queryChoice === 'createRestaurant'">
+      createRestaurant
+    </ng-container>
+  </div>
+</div>
