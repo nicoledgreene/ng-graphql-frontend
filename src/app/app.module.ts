@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 import { HttpClientModule } from '@angular/common/http';
 import { RestaurantComponent } from './restaurant/restaurant.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -25,6 +25,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     GraphQLModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     MatButtonToggleModule,
     MatButtonModule,

@@ -21,17 +21,50 @@
       </ul>
     </ng-container>
     <ng-container *ngIf="queryChoice === 'restaurantByName'">
-      <form class="restaurant-name-form">
+      <form class="restaurant-name-form" [formGroup]="restaurantNameForm" (ngSubmit)="getRestaurantByName()">
         <mat-form-field appearance="fill">
           <mat-input>
             <mat-label>Restaurant name</mat-label>
-            <input matInput placeholder="Ex. Bagel Place" value="">
+            <input matInput formControlName="restaurantName">
           </mat-input>
         </mat-form-field>
+        <button mat-raised-button type="submit">Submit</button>
       </form>
+      <ul *ngIf="restaurantNameResult$ | async">
+        <li>{{ restaurantNameResult$ | async }}</li>
+      </ul>
     </ng-container>
     <ng-container *ngIf="queryChoice === 'createRestaurant'">
-      createRestaurant
+      <form class="create-restaurant-form" [formGroup]="createRestaurantForm" (ngSubmit)="createRestaurant()">
+        <mat-form-field appearance="fill">
+          <mat-input>
+            <mat-label>Restaurant name</mat-label>
+            <input matInput formControlName="name">
+          </mat-input>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-input>
+            <mat-label>Street address</mat-label>
+            <input matInput formControlName="street_address">
+          </mat-input>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-input>
+            <mat-label>City</mat-label>
+            <input matInput formControlName="city">
+          </mat-input>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+          <mat-input>
+            <mat-label>State</mat-label>
+            <input matInput formControlName="state">
+          </mat-input>
+        </mat-form-field>
+        <button mat-raised-button type="submit">Submit</button>
+      </form>
+      <ul *ngIf="createRestaurantResult$ | async">
+        <li>{{ createRestaurantResult$ | async }}</li>
+      </ul>
     </ng-container>
   </div>
 </div>
