@@ -37,6 +37,11 @@ ul {
   }
 }
 
+.no-bullet {
+  list-style-type: none;
+  margin-left: 0
+}
+
 ::ng-deep .mat-form-field-underline,
 ::ng-deep .mat-form-field-appearance-fill .mat-form-field-underline::before,
 ::ng-deep .mat-form-field-ripple { background-color: whitesmoke; }

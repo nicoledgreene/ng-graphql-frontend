@@ -78,46 +78,48 @@ export class RestaurantComponent {
     })
   }
 
-  // createRestaurant() {
-  //   const userInput = this.createRestaurantForm.value;
-  //   // validation. If any inputs are missing, exit early
-  //   for(let key of Object.keys(userInput)) {
-  //     if(userInput[key] === '') {
-  //       this.createRestaurantResult$.next('All fields are required. Please supply a name, address, city and state.')
-  //       return;
-  //     }
-  //   }
-  //   this.apollo.mutate({
-  //     mutation: gql`
-  //       mutation Mutation($input: CreateRestaurantInput!) {
-  //         createRestaurant(input: $input) {
-  //           restaurant {
-  //             name
-  //             slug
-  //             address {
-  //               street
-  //               city
-  //               state
-  //             }
-  //           }
-  //         }
-  //       }
-  //     `,
-  //     variables: {
-  //       input: {
-  //         name: userInput.name,
-  //         slug: this.convertToSlug(userInput.name),
-  //         address: {
-  //           street: userInput.street,
-  //           city: userInput.city,
-  //           state: userInput.state
-  //         }
-  //       }
-  //     }
-  //   }).subscribe((data: any) => {
-  //     console.log(data)
-  //   })
-  // }
+  createRestaurant() {
+    this.createRestaurantResult$.next('')
+    const userInput = this.createRestaurantForm.value;
+    // validation. If any inputs are missing, exit early
+    for(let key of Object.keys(userInput)) {
+      if(userInput[key] === '') {
+        this.createRestaurantResult$.next('All fields are required. Please supply a name, address, city and state.')
+        return;
+      }
+    }
+
+    this.createRestaurantResult$.next('')
+    this.apollo.mutate({
+      mutation: gql`
+        mutation createRestaurant($input: CreateRestaurantInput!) {
+          createRestaurant(input: $input) {
+            ... on CreateRestaurantSuccess {
+              restaurant {
+                name
+                slug
+              }
+            }
+          }
+        }
+      `,
+      variables: {
+        input: {
+          name: userInput.name,
+          slug: this.convertToSlug(userInput.name),
+          address: {
+            street: userInput.street,
+            city: userInput.city,
+            state: userInput.state
+          }
+        }
+      }
+    }).subscribe((data: any) => {
+      this.createRestaurantResult$.next(`${data.data.createRestaurant.__typename}`)
+    }, (error) => {
+      console.error(error)
+    })
+  }
 
   convertToSlug(text: string) {
     return text.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
