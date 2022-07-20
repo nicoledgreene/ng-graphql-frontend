@@ -79,8 +79,12 @@ export class RestaurantComponent {
   }
 
   createRestaurant() {
+    // clear previous createRestaurant result
     this.createRestaurantResult$.next('')
+
+    // get user input string
     const userInput = this.createRestaurantForm.value;
+
     // validation. If any inputs are missing, exit early
     for(let key of Object.keys(userInput)) {
       if(userInput[key] === '') {
@@ -89,7 +93,9 @@ export class RestaurantComponent {
       }
     }
 
+    // clear any error
     this.createRestaurantResult$.next('')
+
     this.apollo.mutate({
       mutation: gql`
         mutation createRestaurant($input: CreateRestaurantInput!) {
